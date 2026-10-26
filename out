@@ -1,0 +1,21 @@
+import pandas as pd 
+
+import numpy as np 
+
+from sklearn.datasets import load_iris from 
+
+sklearn.ensemble import IsolationForest 
+
+iris=load_iris() 
+
+df=pd.DataFrame(iris.data,columns=iris.feature_names) 
+
+df.head() 18
+
+OUTPUT:
+
+m=IsolationForest(contamination=0.05) df['outlier']=m.fit_predict(df) 
+
+df['outlier']=df['outlier'].map({1:'normal',-1:'outliers'}) 
+
+print(df[df['outlier']=='outliers'])
