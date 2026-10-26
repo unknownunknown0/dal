@@ -1,0 +1,89 @@
+import numpy as np
+
+import pandas as pd
+
+import matplotlib.pyplot as plt
+
+from sklearn.datasets import load_iris
+
+from sklearn.model_selection import train_test_split
+
+from sklearn.neighbors import KNeighborsClassifier
+
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+
+iris = load_iris()
+
+x = iris.data[:, :2]
+
+y = iris.target 7
+
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
+
+knn = KNeighborsClassifier(n_neighbors=3)
+
+knn.fit(x_train, y_train)
+
+y_pred = knn.predict(x_test)
+
+new_flower = [[5.8, 3.0]]
+
+prediction = knn.predict(new_flower)
+
+print("Predicted class: ", iris.target_names[prediction][0])
+
+OUTPUT: Predicted class: versicolor
+
+accuracy = accuracy_score(y_test, y_pred)
+
+print("Accuracy: ", accuracy)
+
+cm = confusion_matrix(y_test, y_pred)
+
+print("Confusion Matrix: \n", cm)
+
+print("Classification Report: \n", classification_report(y_test, y_pred))
+
+OUTPUT: Accuracy: 0.8333333333333334
+
+Confusion Matrix: 
+
+[[10 0 0]
+
+[ 0 7 2]
+
+[ 0 3 8]]
+
+Classification Report: 
+
+ precision recall f1-score support
+
+ 0 1.00 1.00 1.00 10
+
+ 1 0.70 0.78 0.74 9
+
+ 2 0.80 0.73 0.76 11
+
+ accuracy 0.83 30
+
+ macro avg 0.83 0.84 0.83 30
+
+weighted avg 0.84 0.83 0.83 30
+
+plt.figure(figsize=(10, 6)) 8
+
+plt.scatter(x[y==0, 0], x[y==0, 1], color='red', label='Setosa')
+
+plt.scatter(x[y==1, 0], x[y==1, 1], color='blue', label='Versicolor')
+
+plt.scatter(x[y==2, 0], x[y==2, 1], color='green', label='Virginica')
+
+plt.scatter(new_flower[0][0], new_flower[0][1], color='black', marker='x', label='New Flower')
+
+plt.legend()
+
+plt.title('KNN classification of Iris Dataset')
+
+plt.xlabel('Sepal Length')
+
+plt.ylabel('Sepal Width')
