@@ -1,0 +1,31 @@
+import pandas as pd
+
+import matplotlib.pyplot as plt
+
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+
+data = {
+
+'Outlook' : ['Sunny', 'Sunny', 'Overcast', 'Rain', 'Rain', 'Rain', 'Overcast', 'Sunny', 'Sunny', 'Rain', 'Sunny', 'Overcast', 'Overcast', 'Rain'],
+
+'Humidity' : ['High', 'High', 'High', 'High', 'Normal', 'Normal', 'Normal', 'High', 'Normal', 'Normal', 'Normal', 'High', 'Normal', 'High'],
+
+'Play' : ['No', 'No', 'Yes', 'Yes', 'Yes', 'No', 'Yes', 'No', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'No']}
+
+df = pd.DataFrame(data)
+
+x = pd.get_dummies(df[['Outlook', 'Humidity']])
+
+y = df['Play'].map({'No' : 0, 'Yes' : 1})
+
+model = DecisionTreeClassifier(criterion='entropy', random_state=42)
+
+model.fit(x, y) 5
+
+plt.figure(figsize=(8, 7))
+
+plot_tree(model, feature_names=x.columns, class_names=['No', 'Yes'], filled=True, rounded=True)
+
+plt.title('Decision Tree')
+
+plt.show()
