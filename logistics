@@ -1,0 +1,53 @@
+import numpy as np
+
+import pandas as pd
+
+import matplotlib.pyplot as plt
+
+data = {
+
+"Age" : [25, 32, 47, 50, 35, 60, 28, 55, 40, 45],
+
+"BloodPressure" : [120, 130, 140, 135, 140, 135, 128, 145, 118, 150],
+
+"Glucose" : [85, 90, 160, 150, 88, 170, 80, 180, 140, 110],
+
+"Diabetes" : [0, 0, 1, 1, 0, 1, 0, 1, 1, 0]} 10
+
+df = pd.DataFrame(data)
+
+x = df[["Age", "BloodPressure", "Glucose"]]
+
+y = df["Diabetes"]
+
+from sklearn.model_selection import train_test_split
+
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
+
+from sklearn.linear_model import LogisticRegression
+
+model = LogisticRegression()
+
+model.fit(x_train, y_train)
+
+single_patient = np.array([[25, 120, 80]])
+
+single_prediction = model.predict(single_patient)
+
+result = "Diabetes" if single_prediction[0] == 1 else "No Diabetes"
+
+print(f"Prediction for Single Patient:")
+
+print(f"Age: {single_patient[0][0]}, Blood Pressure: {single_patient[0][1]}, Glucose: 
+
+{single_patient[0][2]}")
+
+print(f"Prediction: {result}")
+
+OUTPUT:
+
+Prediction for Single Patient:
+
+Age: 25, Blood Pressure: 120, Glucose: 80
+
+Prediction: No Diabetes
